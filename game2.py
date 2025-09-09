@@ -1,5 +1,5 @@
 import random
-
+import time
 
 class player:
 
@@ -97,7 +97,53 @@ def greetings():
     print('\tзабирать его обратно и с этого момента его история началась.')
     print('\n\tШёл наш герой и увидел проход в горе вошел в него и встретил там приспешников Рога')
     print('\n\tИ началась битва!!!!')
+    print('\n\n\t\tПравилa')
+    print('\tУ вас будет 2 секунды на выбор действий, и если вы выбрали уклон то вам предстоит за 2 секунды ввести')
+    print('\tчисло, которое резко появится на экране, если вы не успеете его ввести, или введете не то число, то')
+    print('\tсчитается что вы не смогли уклониться и получили урон.')
 
+def mobAttack(mobObject, userObject):
+    mobAttackPoints = mobObject.attack()
+    startTimer = time.time()
+    isReady = input('a - щит, z - уклон')
+    endTimer = time.time()
 
-greetings()
+    if endTimer - startTimer > 2:
+        print('Вы не успели')
+        userObject.healPoints -= mobAttackPoints
+
+    else:
+        if isReady == 'a' and userObject.defeancePoints > 0:
+            userObject.defeancePoints -= mobAttackPoints
+        elif userObject.defeancePoints <= 0 and isReady == 'a':
+            print('Твой щит разбился больше ты не сможешь защититься от удара.')
+
+        elif isReady == 'z':
+            randomValue = random.randint(10, 999)
+            print(randomValue)
+            startTimer = time.time()
+            userAns = int(input('Введите число:', )
+            endTimer = time.time()
+            
+            if endTimer - startTimer > 3 or userAns != randomValue:
+                print('Вы не успели увернуться.')
+                userObject.healPoints -= mobAttackPoints
+            elif endTimer - startTimer <= 3 and userAns == randomValue:
+                print('Вы успели увернуться.')
+                
+            
+
+                
+def userAttack(userObject, mobObject):
+    userAttackPoints = userObject.attack()
+    #есть рандомный пример = randExpressionAns
+    print(randExpressionAns)
+    startTimer = time.time()
+    userAns = int(input('Введите ответ:', )
+    endTimer = time.time()
+    if endTimer - startTimer > 5 or userAns != randExpressionAns:
+        print('Вы промахнулись.')
+    elif endTimer - startTimer <= 5 and userAns == randExpressionAns:
+        print('Вы попали.')
+        mobObject -= userObject.attack()
 
