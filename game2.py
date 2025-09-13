@@ -131,12 +131,23 @@ def mobAttack(mobObject, userObject):
             elif endTimer - startTimer <= 3 and userAns == randomValue:
                 print('Вы успели увернуться.')
                 
-            
+def getRandExpressionAns():
+    firstValue = random.randint(1, 999)
+    literal = random.randint(0, 1)
+    secondValue = random.randint(1, 999)
+    
+    if literal == 0:
+        ans = firstValue - secondValue
+        print(firstValue, '-' ,secondValue)
+    elif literal == 1:
+        ans = firstValue + secondValue
+        print(firstValue, '+' ,secondValue)
+    return ans
 
-                
+    
 def userAttack(userObject, mobObject):
     userAttackPoints = userObject.attack()
-    #есть рандомный пример = randExpressionAns
+    randExpressionAns = getRandExpressionAns()
     print(randExpressionAns)
     startTimer = time.time()
     userAns = int(input('Введите ответ:', )
@@ -146,4 +157,62 @@ def userAttack(userObject, mobObject):
     elif endTimer - startTimer <= 5 and userAns == randExpressionAns:
         print('Вы попали.')
         mobObject -= userObject.attack()
+
+def fight(mobObject, userObject):
+    while mobObject > 0 or userObject > 0:
+        mobAttack(mobObject, userObject)
+        userAttack(userObject, mobObject)
+    return userObject.healPoints > mobObject.healPoints
+
+
+
+
+def game():
+    greetings()
+    randomMob = random.randint(1, 6)
+    spiderMob = spider()
+    skeletMob = skelet()
+    darkPrinceMob = darkPrince()
+    slimeMob = slime()
+    cyclopeMob = cyclope()
+    kingSnakeMob = kingSnake()
+    BossMob = Boss()
+    
+    while user.healPoints > 0 or BossMob.healPoints > 0:
+        if randomMob == 1:
+            spiderMob.healPoints = 100
+        elif randomMob == 2:
+            skeletMob.healPoints = 100
+        elif randomMob = 3:
+            darkPrinceMob.healPoints = 100
+        elif randomMob == 4:
+            slimeMob.healPoints = 100
+        elif randomMob == 5:
+            cyclopeMob.healPoints = 100
+        elif randomMob == 6:
+            kingSnakeMob.healPoints = 100
+            
+        
+game()
+    
+        
+
+        
+        
+
+        
+    
+    
+    
+    
+    
+                          
+                          
+            
+            
+        
+        
+            
+    
+    
 
