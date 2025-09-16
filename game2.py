@@ -17,7 +17,8 @@ class player:
 class spider:
     def __init__(self):
         self.healPoints = 30
-        self.attackPoints = 8 
+        self.attackPoints = 8
+        self.constHealPoints = 30
     
     def attack(self):
         print('Вас атаковал паук')
@@ -28,6 +29,7 @@ class skelet:
     def __init__(self):
         self.healPoints = 25
         self.attackPoints = 6
+        self.constHealPoints = 25
 
     def attack(self):
         print('Вас атаковал скелет')
@@ -39,9 +41,10 @@ class skelet:
 
 class darkPrince:
     def __init__(self):
-        self.healPoints = 60
+        self.constHealPoints = 60
         self.attackPoints = 20
         self.defeancePoints = 0
+        self.healPoints = 60
 
     def attack(self):
         print('На вас напал тёмный принц')
@@ -51,8 +54,9 @@ class darkPrince:
 
 class slime:
     def __init__(self):
-        self.healPoints = 50
+        self.constHellPoints = 50
         self.attackPoints = 15
+        self.healPoints = 50
 
     def attack(self):
         print('На вас напал слайм')
@@ -65,6 +69,7 @@ class cyclope:
         self.healPoints = 80
         self.attackPoints = 35
         self.defeancePoints = 29
+        self.constHealPoints = 80
 
     def attack(self):
         print('На вас напал цыклоп')
@@ -74,6 +79,7 @@ class kingSnake:
     def __init__(self):
         self.healPoints = 95
         self.attackPoints = 49
+        self.constHealPoints = 95
 
     def attack(self):
         print('На вас напал король змей')
@@ -85,6 +91,7 @@ class Boss:
     def __init__(self):
         self.healPoints = 115
         self.attackPoints = 65
+        self.constHealPoints = 115
 
     def attack(self):
         print('На вас напал БОСС')
@@ -159,7 +166,7 @@ def userAttack(userObject, mobObject):
         mobObject -= userObject.attack()
 
 def fight(mobObject, userObject):
-    while mobObject > 0 or userObject > 0:
+    while mobObject.healPoints > 0 or userObject.healPoints > 0:
         mobAttack(mobObject, userObject)
         userAttack(userObject, mobObject)
     return userObject.healPoints > mobObject.healPoints
@@ -169,7 +176,8 @@ def fight(mobObject, userObject):
 
 def game():
     greetings()
-    randomMob = random.randint(1, 6)
+    user = player()
+    randomMob = random.randint(1, mobsAmount)
     spiderMob = spider()
     skeletMob = skelet()
     darkPrinceMob = darkPrince()
@@ -177,25 +185,30 @@ def game():
     cyclopeMob = cyclope()
     kingSnakeMob = kingSnake()
     BossMob = Boss()
+    mobsAmount = 2
     
     while user.healPoints > 0 or BossMob.healPoints > 0:
-        if randomMob == 1:
-            spiderMob.healPoints = 100
-        elif randomMob == 2:
-            skeletMob.healPoints = 100
-        elif randomMob = 3:
-            darkPrinceMob.healPoints = 100
-        elif randomMob == 4:
-            slimeMob.healPoints = 100
-        elif randomMob == 5:
-            cyclopeMob.healPoints = 100
-        elif randomMob == 6:
-            kingSnakeMob.healPoints = 100
+        for i in range(mobsAmount):
+            randomMob = random.randint(1, mobsAmount)
+            if randomMob == 1:
+                spiderMob.healPoints = spiderMob.constHealPoints
+            elif randomMob == 2:
+                skeletMob.healPoints = skeletMob.constHealPoints 
+            elif randomMob = 3:
+                darkPrinceMob.healPoints = darkPrinceMob.constHealPoints
+            elif randomMob == 4:
+                slimeMob.healPoints = smileMob.constHealPoints
+            elif randomMob == 5:
+                cyclopeMob.healPoints = cyclopeMob.constHealPoints
+            elif randomMob == 6:
+                kingSnakeMob.healPoints = kingSnakeMob.constHealPoints
+            isAlive = fight(mobObject, userObject)
+        mobsAmount += 2
+    
+
             
         
 game()
-    
-        
 
         
         
