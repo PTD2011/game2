@@ -127,7 +127,11 @@ def mobAttack(mobObject, userObject):
             userObject.defeancePoints -= mobAttackPoints
         elif userObject.defeancePoints <= 0 and isReady == 'a':
             print('Твой щит разбился больше ты не сможешь защититься от удара.')
+<<<<<<< HEAD
             userObject.healPoints -= mobAttackPoints
+=======
+            userOject.healPoints -= mobAttackPoints
+>>>>>>> 1aa6081c3ae2af9ba37cc9428c59e35b8699e3c1
 
         elif isReady == 'z':
             randomValue = random.randint(10, 999)
@@ -192,7 +196,13 @@ def fight(mobObject, userObject):
         mobAttack(mobObject, userObject)
         showHPStatus(userObject, mobObject)
         userAttack(userObject, mobObject)
+<<<<<<< HEAD
         showHPStatus(userObject, mobObject)
+=======
+        print('\n USER HP: ', userObject.healPoints, '\n')
+        print(' MOB HP: ', mobObject.healPoints, '\n')
+        print('SHIELD HP: ', userObject.defeancePoints,'\n')
+>>>>>>> 1aa6081c3ae2af9ba37cc9428c59e35b8699e3c1
     return userObject.healPoints > mobObject.healPoints
 
 
