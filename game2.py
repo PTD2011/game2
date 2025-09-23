@@ -17,7 +17,7 @@ class player:
 class spider:
     def __init__(self):
         self.healPoints = 30
-        self.attackPoints = 8
+        self.attackPoints = 8 
         self.constHealPoints = 30
     
     def attack(self):
@@ -54,7 +54,7 @@ class darkPrince:
 
 class slime:
     def __init__(self):
-        self.constHellPoints = 50
+        self.constHealPoints = 50
         self.attackPoints = 15
         self.healPoints = 50
 
@@ -97,6 +97,7 @@ class Boss:
         print('На вас напал БОСС')
         return self.attackPoints
 
+
 def greetings():
     print('Добро пожаловать в игру! By PTD\n\n\n\n\tЖил да был народ никого не трогал')
     print('\tи был у них священный огонь, что грел их, но однажды...\n\tПришел Рог и забрал его')
@@ -108,11 +109,13 @@ def greetings():
     print('\tУ вас будет 2 секунды на выбор действий, и если вы выбрали уклон то вам предстоит за 2 секунды ввести')
     print('\tчисло, которое резко появится на экране, если вы не успеете его ввести, или введете не то число, то')
     print('\tсчитается что вы не смогли уклониться и получили урон.')
+    startGame = input('Когда прочитаете всё нажмите любую клавишу: ')
+
 
 def mobAttack(mobObject, userObject):
     mobAttackPoints = mobObject.attack()
     startTimer = time.time()
-    isReady = input('a - щит, z - уклон')
+    isReady = input('a - щит, z - уклон: ')
     endTimer = time.time()
 
     if endTimer - startTimer > 2:
@@ -124,12 +127,13 @@ def mobAttack(mobObject, userObject):
             userObject.defeancePoints -= mobAttackPoints
         elif userObject.defeancePoints <= 0 and isReady == 'a':
             print('Твой щит разбился больше ты не сможешь защититься от удара.')
+            userObject.healPoints -= mobAttackPoints
 
         elif isReady == 'z':
             randomValue = random.randint(10, 999)
             print(randomValue)
             startTimer = time.time()
-            userAns = int(input('Введите число:', )
+            userAns = int(input('Введите число:' ))
             endTimer = time.time()
             
             if endTimer - startTimer > 3 or userAns != randomValue:
@@ -137,11 +141,12 @@ def mobAttack(mobObject, userObject):
                 userObject.healPoints -= mobAttackPoints
             elif endTimer - startTimer <= 3 and userAns == randomValue:
                 print('Вы успели увернуться.')
+
                 
 def getRandExpressionAns():
-    firstValue = random.randint(1, 999)
+    firstValue = random.randint(1, 99)
     literal = random.randint(0, 1)
-    secondValue = random.randint(1, 999)
+    secondValue = random.randint(1, 99)
     
     if literal == 0:
         ans = firstValue - secondValue
@@ -151,24 +156,43 @@ def getRandExpressionAns():
         print(firstValue, '+' ,secondValue)
     return ans
 
-    
+
+def showHPStatus(userObject, mobObject):
+    if userObject.healPoints <= 0:
+        print('\n\nВаше HP: 0\n')
+    else:
+        print('\n\nВаше HP: ', userObject.healPoints,'\n')
+        
+    if userObject.defeancePoints <= 0:
+        print('HP щита: 0\n')
+    else:
+        print('HP щита: ', userObject.defeancePoints,'\n')
+
+    if mobObject.healPoints <= 0:
+        print('HP моба: 0\n\n')
+    else:
+        print('HP моба: ', mobObject.healPoints,'\n\n')
+        
+        
 def userAttack(userObject, mobObject):
     userAttackPoints = userObject.attack()
     randExpressionAns = getRandExpressionAns()
-    print(randExpressionAns)
+    
     startTimer = time.time()
-    userAns = int(input('Введите ответ:', )
+    userAns = int(input('Введите ответ: ', ))
     endTimer = time.time()
-    if endTimer - startTimer > 5 or userAns != randExpressionAns:
+    if endTimer - startTimer > 9 or userAns != randExpressionAns:
         print('Вы промахнулись.')
-    elif endTimer - startTimer <= 5 and userAns == randExpressionAns:
+    elif endTimer - startTimer <= 9 and userAns == randExpressionAns:
         print('Вы попали.')
-        mobObject -= userObject.attack()
+        mobObject.healPoints -= userObject.attack()
 
 def fight(mobObject, userObject):
-    while mobObject.healPoints > 0 or userObject.healPoints > 0:
+    while mobObject.healPoints > 0 and userObject.healPoints > 0:
         mobAttack(mobObject, userObject)
+        showHPStatus(userObject, mobObject)
         userAttack(userObject, mobObject)
+        showHPStatus(userObject, mobObject)
     return userObject.healPoints > mobObject.healPoints
 
 
@@ -176,7 +200,9 @@ def fight(mobObject, userObject):
 
 def game():
     greetings()
-    user = player()
+    isAlive = True
+    userObject = player()
+    mobsAmount = 2
     randomMob = random.randint(1, mobsAmount)
     spiderMob = spider()
     skeletMob = skelet()
@@ -185,24 +211,35 @@ def game():
     cyclopeMob = cyclope()
     kingSnakeMob = kingSnake()
     BossMob = Boss()
-    mobsAmount = 2
     
-    while user.healPoints > 0 or BossMob.healPoints > 0:
+    
+    while userObject.healPoints > 0 or BossMob.healPoints > 0:
         for i in range(mobsAmount):
+            if isAlive == False:
+                break
+            
             randomMob = random.randint(1, mobsAmount)
             if randomMob == 1:
                 spiderMob.healPoints = spiderMob.constHealPoints
+                isAlive = fight(spiderMob, userObject)
             elif randomMob == 2:
-                skeletMob.healPoints = skeletMob.constHealPoints 
-            elif randomMob = 3:
+                skeletMob.healPoints = skeletMob.constHealPoints
+                isAlive = fight(skeletMob, userObject)
+            elif randomMob == 3:
                 darkPrinceMob.healPoints = darkPrinceMob.constHealPoints
+                isAlive = fight(darkPrinceMob, userObject)
             elif randomMob == 4:
-                slimeMob.healPoints = smileMob.constHealPoints
+                slimeMob.healPoints = slimeMob.constHealPoints
+                isAlive = fight(slimeMob, userObject)
             elif randomMob == 5:
                 cyclopeMob.healPoints = cyclopeMob.constHealPoints
+                isAlive = fight(cyclopeMob, userObject)
             elif randomMob == 6:
                 kingSnakeMob.healPoints = kingSnakeMob.constHealPoints
-            isAlive = fight(mobObject, userObject)
+                isAlive = fight(kingSnakeMob, userObject)
+            print('ISALIVE:', isAlive) 
+
+        
         mobsAmount += 2
     
 
@@ -210,6 +247,7 @@ def game():
         
 game()
 
+
         
         
 
@@ -228,4 +266,3 @@ game()
             
     
     
-
