@@ -5,6 +5,7 @@ class player:
 
     def __init__(self):
         self.healPoints = 100
+        self.constHealPoints = 100
         self.attackPoints = 10
         self.superAttackPoints = 15
         self.defeancePoints = 25
@@ -127,11 +128,7 @@ def mobAttack(mobObject, userObject):
             userObject.defeancePoints -= mobAttackPoints
         elif userObject.defeancePoints <= 0 and isReady == 'a':
             print('Твой щит разбился больше ты не сможешь защититься от удара.')
-<<<<<<< HEAD
             userObject.healPoints -= mobAttackPoints
-=======
-            userOject.healPoints -= mobAttackPoints
->>>>>>> 1aa6081c3ae2af9ba37cc9428c59e35b8699e3c1
 
         elif isReady == 'z':
             randomValue = random.randint(10, 999)
@@ -194,16 +191,15 @@ def userAttack(userObject, mobObject):
 def fight(mobObject, userObject):
     while mobObject.healPoints > 0 and userObject.healPoints > 0:
         mobAttack(mobObject, userObject)
+        if userObject.healPoints <= 0:
+            break
         showHPStatus(userObject, mobObject)
         userAttack(userObject, mobObject)
-<<<<<<< HEAD
+        
         showHPStatus(userObject, mobObject)
-=======
-        print('\n USER HP: ', userObject.healPoints, '\n')
-        print(' MOB HP: ', mobObject.healPoints, '\n')
-        print('SHIELD HP: ', userObject.defeancePoints,'\n')
->>>>>>> 1aa6081c3ae2af9ba37cc9428c59e35b8699e3c1
-    return userObject.healPoints > mobObject.healPoints
+        
+        
+    return userObject.healPoints > 0
 
 
 
@@ -247,17 +243,30 @@ def game():
             elif randomMob == 6:
                 kingSnakeMob.healPoints = kingSnakeMob.constHealPoints
                 isAlive = fight(kingSnakeMob, userObject)
-            print('ISALIVE:', isAlive) 
 
-        
+        if isAlive == False:
+                break
         mobsAmount += 2
-        buffChoice = int(input('Молодец ты прошел уровень', mobsAmount / 2,' теперь у тебя на выбор 3 бафа'))
+        print('Молодец ты прошел уровень теперь у тебя на выбор 3 бафа')
         print('\n\n 1-ты регенерируешь фул хп и прибавляешь ещё\n')
-        print('2-ты получаешь + урон')
-        print('3-ты регенерируешь HP щита и прибавляешь ещё')
-        
-        if 
-                     
+        print('\n2-ты получаешь + урон\n')
+        print('\n3-ты регенерируешь HP щита и прибавляешь ещё\n')
+
+        buffChoice = input('w - + 25%HP, a - + 15 урона, z - + 50HP щита: ')
+        if buffChoice == 'w':
+            userObject.healPoints = int(userObject.constHealPoints * 1.25)
+            print('Вы выбрали + HP')
+        elif buffChoice == 'z':
+            userObject.defeancePoints = int(userObject.constDefeancePoints * 1.5)
+            print('Вы выбрали + HP щита')
+        elif buffChoice == 'a':
+            userObject.attackPoints += userObject.superAttackPoints
+            print('Вы выбрали + урон')
+
+    if BossMob.healPoints <= 0:
+        print('Молодец ты победил')
+    elif userObject.healPoints <= 0:
+        print('Ты проиграл')
 
         
     
