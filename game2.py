@@ -9,9 +9,6 @@ class player:
         self.attackPoints = 10
         self.superAttackPoints = 15
         self.defeancePoints = 25
-        self.constHealPoints = 100
-        self.constDefeancePoints = 25
-        
     
     def attack(self):
         print('Вы атаковали')
@@ -191,7 +188,6 @@ def userAttack(userObject, mobObject):
         print('Вы попали.')
         mobObject.healPoints -= userObject.attack()
 
-
 def fight(mobObject, userObject):
     while mobObject.healPoints > 0 and userObject.healPoints > 0:
         mobAttack(mobObject, userObject)
@@ -206,45 +202,14 @@ def fight(mobObject, userObject):
     return userObject.healPoints > 0
 
 
-def (mobObject, userObject):
-    randomMob = random.randint(1, mobsAmount)
-    if randomMob == 1:
-        spiderMob.healPoints = spiderMob.constHealPoints
-        isAlive = fight(spiderMob, userObject)
-    elif randomMob == 2:
-        skeletMob.healPoints = skeletMob.constHealPoints
-        isAlive = fight(skeletMob, userObject)
-    elif randomMob == 3:
-        darkPrinceMob.healPoints = darkPrinceMob.constHealPoints
-        isAlive = fight(darkPrinceMob, userObject)
-    elif randomMob == 4:
-        slimeMob.healPoints = slimeMob.constHealPoints
-        isAlive = fight(slimeMob, userObject)
-    elif randomMob == 5:
-        cyclopeMob.healPoints = cyclopeMob.constHealPoints
-        isAlive = fight(cyclopeMob, userObject)
-    elif randomMob == 6:
-        kingSnakeMob.healPoints = kingSnakeMob.constHealPoints
-        isAlive = fight(kingSnakeMob, userObject
 
-def setMobs(mobObject, userObject):
-    isAlive = True
-    userObject = player()
-    mobsAmount = 2
-    spiderMob = spider()
-    skeletMob = skelet()
-    darkPrinceMob = darkPrince()
-    slimeMob = slime()
-    BossMob = Boss()
-    cyclopeMob = cyclope()
-    kingSnakeMob = kingSnake()
 
-    
 def game():
     greetings()
     isAlive = True
     userObject = player()
     mobsAmount = 2
+    randomMob = random.randint(1, mobsAmount)
     spiderMob = spider()
     skeletMob = skelet()
     darkPrinceMob = darkPrince()
@@ -302,16 +267,6 @@ def game():
         print('Молодец ты победил')
     elif userObject.healPoints <= 0:
         print('Ты проиграл')
-
-        #print(вступление)
-        buffChoice = input('w - + 25%HP, a - + 15 урона, z - + 50HP щита')
-        if buffChoice == 'w':
-            userObject.healPoints = userObject.constHealPoints * 1.25
-        elif buffChois == 'z':
-            userObject.defeancePoints = userObject.constDefeancePoints * 1.50
-        elif buffChoice == 'a':
-            userObject.attackPoints += userObject.superAttackPoints
-            
 
         
     
